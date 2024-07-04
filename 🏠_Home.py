@@ -1,11 +1,11 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="Quant AI",
+    page_title="Quant Retail AI",
     page_icon="🤖",
 )
 
-st.write("# VCB Quant Department 👋")
+st.write("# Quant Retail AI 👋")
 
 st.sidebar.success("Select a demo above.")
 
