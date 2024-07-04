@@ -92,7 +92,7 @@ while my_run.status in ["queued", "in_progress"]:
         for txt in all_messages.data:
             if txt.role == 'assistant':
                 st.markdown(body=txt.content[0].text.value)
-                print(txt.content[0].text.value)
+                # print(txt.content[0].text.value)
         break
     elif keep_retrieving_run.status == "queued" or keep_retrieving_run.status == "in_progress":
         pass
