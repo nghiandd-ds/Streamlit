@@ -14,14 +14,13 @@ st.write("""
 # Check Code 💻
 """)
 
-#with st.sidebar:
-#    openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
+with st.sidebar:
+    openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
 
-openai_api_key = "sk-proj-ZphyXiNXa8EInrmEvM4XT3BlbkFJBnKQFK3aH9aabtWprhM8"
 
-#if not openai_api_key:
-#    st.info("Please add your OpenAI API key to continue.")
-#    st.stop()
+if not openai_api_key:
+    st.info("Please add your OpenAI API key to continue.")
+    st.stop()
     
 # upload file by streamlit
 uploaded_file = st.file_uploader("Upload code")
@@ -95,7 +94,7 @@ my_run = client.beta.threads.runs.create(
     assistant_id = Coder,
     max_prompt_tokens = 10000,
     max_completion_tokens = 16000,
-    instructions="Don't give any update about the process. Only submit to the manager final report as a downloadable PDF file."
+    instructions="Don't give any update about the process. Only submit to the manager final report."
 )
 
 while my_run.status in ["queued", "in_progress"]:
@@ -121,6 +120,7 @@ while my_run.status in ["queued", "in_progress"]:
                 st.markdown(body=txt.content[0].text.value)
         break
     elif keep_retrieving_run.status == "queued" or keep_retrieving_run.status == "in_progress":
+        st.markdown(body="Processing request...")
         pass
     else:
         print(f"Run status: {keep_retrieving_run.status}")
