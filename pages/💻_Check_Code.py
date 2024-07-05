@@ -14,14 +14,14 @@ st.write("""
 # Check Code 💻
 """)
 
-with st.sidebar:
-    openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
+#with st.sidebar:
+#    openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
 
+openai_api_key = "sk-proj-ZphyXiNXa8EInrmEvM4XT3BlbkFJBnKQFK3aH9aabtWprhM8"
 
-
-if not openai_api_key:
-    st.info("Please add your OpenAI API key to continue.")
-    st.stop()
+#if not openai_api_key:
+#    st.info("Please add your OpenAI API key to continue.")
+#    st.stop()
     
 # upload file by streamlit
 uploaded_file = st.file_uploader("Upload code")
@@ -93,7 +93,9 @@ my_thread_message = client.beta.threads.messages.create(
 my_run = client.beta.threads.runs.create(
     thread_id = my_thread.id,
     assistant_id = Coder,
-    instructions="Don't give any update about the process. Only submit to the manager final report."
+    max_prompt_tokens = 10000,
+    max_completion_tokens = 16000,
+    instructions="Don't give any update about the process. Only submit to the manager final report as a downloadable PDF file."
 )
 
 while my_run.status in ["queued", "in_progress"]:
@@ -123,6 +125,7 @@ while my_run.status in ["queued", "in_progress"]:
     else:
         print(f"Run status: {keep_retrieving_run.status}")
         break
+        
 # Delete file and agent
 client.files.delete(gpt_file)
 client.beta.assistants.delete(Coder)
