@@ -120,7 +120,6 @@ while my_run.status in ["queued", "in_progress"]:
                 st.markdown(body=txt.content[0].text.value)
         break
     elif keep_retrieving_run.status == "queued" or keep_retrieving_run.status == "in_progress":
-        st.markdown(body="Processing request...")
         pass
     else:
         print(f"Run status: {keep_retrieving_run.status}")
