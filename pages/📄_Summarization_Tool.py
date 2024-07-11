@@ -53,7 +53,24 @@ assistant = client.beta.assistants.create(
 
 
 # ChatGPT promt
-promt = """Provide a summary of the article."""
+# promt = """Provide a summary of the article."""
+
+promt = """
+Provide a long, detailed summary of the paper with the following format:
+    1. Authors:
+    2. Published date:
+    3. Title:
+    4. Abstract:
+    5. Introduction:
+    6. Methodology:
+    7. Results:
+    8. Conclusion:
+    9. References:
+Must be very detailed in part 6 Methodology, describe in detail each technique used in the paper and how they were used.
+Must be very detailed in part 7 Results.
+Must be very precise, must not make up words, use the words in the paper.
+"""
+
 # Create thread
 my_thread = client.beta.threads.create()
 
@@ -98,6 +115,7 @@ while my_run.status in ["queued", "in_progress"]:
         pass
     else:
         print(f"Run status: {keep_retrieving_run.status}")
+        st.write(f"Run status: {keep_retrieving_run.status}")
         break
 # Delete file and agent
 client.files.delete(gpt_file)
