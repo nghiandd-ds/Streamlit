@@ -11,13 +11,13 @@ st.set_page_config(
 
 st.write("# Summarization Tool 📄")
 
-with st.sidebar:
-    openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
+# with st.sidebar:
+#     openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
 
 
-if not openai_api_key:
-    st.info("Please add your OpenAI API key to continue.")
-    st.stop()
+# if not openai_api_key:
+#     st.info("Please add your OpenAI API key to continue.")
+#     st.stop()
     
 # upload file by streamlit
 uploaded_file = st.file_uploader("Upload file")
@@ -25,9 +25,12 @@ uploaded_file = st.file_uploader("Upload file")
 
 if not uploaded_file:
     st.stop()    
-    
+
+a = 'sk-proj-50i25Vf5uMtQ8EpYF'
+b = 'AyaT3BlbkFJ2B9b6oBxsJpx058Zxocv'
+
 # Connect to Openai API
-client = OpenAI(api_key=openai_api_key)
+client = OpenAI(api_key=a+b)
 
 # Upload file to OpenAI and take ID
 gpt_file = client.files.create(
