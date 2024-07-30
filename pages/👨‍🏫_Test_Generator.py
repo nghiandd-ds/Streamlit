@@ -1,12 +1,4 @@
 import streamlit as st
-from openai import OpenAI
-import numpy as np
-import pandas as pd
-import os
-import re
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.platypus import SimpleDocTemplate, Paragraph
 from io import BytesIO
 from base import request_gpt
 import PyPDF2
@@ -66,15 +58,12 @@ if limit == 'Yes':
     pdfReader = PyPDF2.PdfFileReader(BytesIO(uploaded_file.read()))
     num_pages = pdfReader.getNumPages()
 
-    # st.markdown(f"Number of pages in the file: {num_pages}")
-
     limit_range = st.slider("Choose the page range of the file:", 1, num_pages, (1, num_pages))
     st.markdown(f"Content range: {limit_range[0]} - {limit_range[1]}")
     extra_prompt = f" Limit the content in the file from page {limit_range[0]} to page {limit_range[1]}."
     prompt = prompt + extra_prompt
 
 prompt = prompt + " At the end of the test, add a new section to provide the correct answer and detailed explanation for each question. Also refer to the page number in the file for each question and quote the relevant text."
-st.markdown(prompt)
 
 if st.button("Generate Test"):
     request_gpt(uploaded_file, prompt, "test")

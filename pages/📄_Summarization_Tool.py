@@ -1,13 +1,4 @@
 import streamlit as st
-from openai import OpenAI
-import numpy as np
-import pandas as pd
-import os
-import re
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.platypus import SimpleDocTemplate, Paragraph
-from io import BytesIO
 from base import request_gpt
 
 st.set_page_config(
@@ -64,4 +55,5 @@ elif option == "Article":
 
 print(prompt)
 
-request_gpt(uploaded_file, prompt, "summary")
+if st.button("Summarize"):
+    request_gpt(uploaded_file, prompt, "summary")

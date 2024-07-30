@@ -1,13 +1,10 @@
 import streamlit as st
 from openai import OpenAI
-import numpy as np
-import pandas as pd
-import os
+from io import BytesIO
 import re
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph
-from io import BytesIO
 
 def request_gpt(input_file, prompt, output_filename):
     # Connect to Openai API
@@ -21,7 +18,8 @@ def request_gpt(input_file, prompt, output_filename):
         purpose='assistants').id
 
     assistant = client.beta.assistants.create(
-        model="gpt-3.5-turbo-0125",
+        # model="gpt-3.5-turbo-0125",
+        model="gpt-4o-mini-2024-07-18",
         instructions="You are a researcher",
         name="Summary Assistant",
         tools=[{"type": "file_search"}]
@@ -133,7 +131,3 @@ def request_gpt(input_file, prompt, output_filename):
     st.markdown(body=output)
 
     st.stop() 
-
-
-
-
