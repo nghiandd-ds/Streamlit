@@ -54,16 +54,36 @@ if not limit:
 prompt = f"From the input file, generate a test with {num_question} questions of type {question_type} with difficulty level {difficulty}."
 
 if limit == 'Yes':
-    # file = open(uploaded_file, 'rb')
-    pdfReader = PyPDF2.PdfFileReader(BytesIO(uploaded_file.read()))
-    num_pages = pdfReader.getNumPages()
+    limit_type = st.selectbox(
+        "Choose how to limit content:",
+        ('By Page Range', 'By Chapters'),
+        index=None
+    )
 
-    limit_range = st.slider("Choose the page range of the file:", 1, num_pages, (1, num_pages))
-    st.markdown(f"Content range: {limit_range[0]} - {limit_range[1]}")
-    extra_prompt = f" Limit the content in the file from page {limit_range[0]} to page {limit_range[1]}."
+    if not limit_type:
+        st.stop()
+
+    if limit_type == 'By Page Range':
+        pdfReader = PyPDF2.PdfFileReader(BytesIO(uploaded_file.read()))
+        num_pages = pdfReader.getNumPages()
+
+        limit_range = st.slider("Choose the page range of the file:", 1, num_pages, (1, num_pages))
+        st.markdown(f"Content range: {limit_range[0]} - {limit_range[1]}")
+        extra_prompt = f" Limit the content in the file from page {limit_range[0]} to page {limit_range[1]}."
+
+    elif limit_type == 'By Chapters':
+        chapters = st.text_area("Enter the chapter numbers or titles")
+        if not chapters:
+            st.warning("Please enter at least one chapter number or title.")
+            st.stop()
+        extra_prompt = f" Limit the content to chapter {chapters} in the file."
+
+
     prompt = prompt + extra_prompt
 
 prompt = prompt + " At the end of the test, add a new section to provide the correct answer and detailed explanation for each question. Also refer to the page number in the file for each question and quote the relevant text."
+
+st.markdown(prompt)
 
 if st.button("Generate Test"):
     request_gpt(uploaded_file, prompt, "test")
