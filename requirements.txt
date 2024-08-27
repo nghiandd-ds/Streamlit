@@ -5,3 +5,4 @@ markdown2 == 2.5.0
 pdfkit == 1.0.0
 markdown
 tiktoken
+scipy
