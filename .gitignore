@@ -1,11 +1,10 @@
-/.DS_Store
-/.env
-.pdf
+*.env
+*.pdf
 /test_1.py
 /test_2.py
 /test_3.py
 /text_file.txt
-.DS_Store
-.pyc
-.ipynb_checkpoints
-.ipynb
+*.DS_Store
+*.pyc
+*.ipynb_checkpoints
+*.ipynb
