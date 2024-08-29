@@ -78,9 +78,11 @@ def query_message(
     """
     strings, relatednesses = strings_ranked_by_relatedness(query, df)
     introduction = '''
-    Only use the given information below to answer the subsequent question. If you unable to answer the question, just say you don't have the necessary information to answer.
-    If you have to give name of relevent chapter of Basel Framework, refer to Chapter as given format: 
-    [{Chapter}](https://www.bis.org/basel_framework/chapter/{The first 3 characters of Chapter}/{The rest of the Chapter}/), Article
+Only use the given information below to answer the subsequent question. 
+If you are unable to answer the question, just say you don't have the necessary information to answer and list the points you need user to 
+clarify. In that case, try to guest the right question and answer it based on information given.
+If you have to give name of relevent chapter of Basel Framework and not CRR, refer to Chapter as given format: 
+[{Chapter}](https://www.bis.org/basel_framework/chapter/{The first 3 characters of Chapter}/{The rest of the Chapter}/), Article 
     '''
     
     question = f"\n\nQuestion: {query}"
@@ -119,7 +121,7 @@ def ask(
 
 
 
-st.title("💬 Ask Basel")
+st.title("Ask Basel 💬")
 st.caption("🚀 A RAG chatbot on [Basel Framework](https://www.bis.org/basel_framework/) and [CRR](https://www.eba.europa.eu/regulation-and-policy/single-rulebook/interactive-single-rulebook/12674) powered by OpenAI")
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
